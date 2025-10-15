@@ -47,6 +47,11 @@ Get the admin password from the OpenShift secret:
 * In the OpenShift UI, make sure you are in **Project** `AAP`, then go to **Workloads->Secrets** and copy the password from the secret `<instance name>-admin-password`.
 * Login to the AAP UI as user `admin` and the password you extracted from the secret.
 
+You should now see the dialog in AAP asking for a subscription, you can supply it either by a Subscription Manifest provided by your facilitator or by logging into your Red Hat account that must contain an AAP subscription. 
+After providing an AAP Subscription you should be greeted with a shiny new AAP 2.6 UI!
+
+
+
 
 
 
