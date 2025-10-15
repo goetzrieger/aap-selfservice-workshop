@@ -16,7 +16,7 @@ The easiest way is to create an instance of the tile **Ansible Automation Platfo
 
 * On the tile, click **Create instance**
 * To get full control of the process, switch from **Form view** to **YAML view**
-* Replace the **spec** section with this content:
+* In this YAML snippet replace `<read-write-many-storage-class>` with the RWX storage class `ocs-external-storagecluster-cephfs`, then replace the **spec** section with this content:
 
 ```
 spec:
@@ -41,6 +41,12 @@ spec:
     file_storage_storage_class: <read-write-many-storage-class>
     file_storage_size: 10Gi
 ```
+Now wait until the AAP instance has been deployed by the Operator. After all ressources have been deployed, look up the Automation Controller URL and access it.
+
+Get the admin password from the OpenShift secret:
+* In the OpenShift UI, make sure you are in **Project** `AAP`, then go to **Workloads->Secrets** and copy the password from the secret `<instance name>-admin-password`.
+* Login to the AAP UI as user `admin` and the password you extracted from the secret.
+
 
 
 
