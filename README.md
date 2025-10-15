@@ -16,7 +16,7 @@ The easiest way is to create an instance of the tile **Ansible Automation Platfo
 
 * On the tile, click **Create instance**
 * To get full control of the process, switch from **Form view** to **YAML view**
-* Replace the **spec* section with this content:
+* Replace the **spec** section with this content:
 
 ```
 spec:
