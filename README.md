@@ -221,7 +221,89 @@ And now it's finally time to log in to your **Self-Service Automation Portal**. 
 
 If everything was configured correctly you should be greeted with a nice new UI, showing one Job Template, the `Demo Job Template`. As a first test, execute the Template by clicking **Start**. After it has finished you can have a look at the logs for the steps executed. Have a look at the AAP Jobs view, the Template will show here as a Playbook run, too.
 
-## Using the Self-Service Portal
+## Setting Up RBAC
+
+Up to now you've just used your AAP admin user who can see all Job Templates. But the main point of the Self-Service Portal is to enable users that don't need access to the AAP UI to execute Job Templates. This basically means we need unprivileged users with a limited view of the Job Templates, since we only want the user to see the Job Templates he is allowed to use.
+
+### Create an unprivileged user in AAP
+
+Since users are synced from AAP to the Self-Service Portal, we first need a user with limited access to a Job Template. We assume you to have some experience with AAP adminstration so we'll just outline the steps you need to do. Let's get started:
+
+* As admin in AAP create a Team `team1`  (you can of course get more creative...;-)
+* Create a user `user1`
+* Add the user to the team
+* Duplicate the `Demo Job Template` to `Demo Job Template 2`
+* Give the team `team1` execute rights on the template
+* Check in AAP you can log in as the user and you can see and execute the Job Template
+
+### Test the user in the Self-Service Portal
+
+Now switch to the Self-Service Portal UI as **user admin**.
+
+* On the **Templates** page click `Sync now` aand select both `Organizations, Users, and Teams` and `Job Templates`.
+* After the sync has finished, in an incognito tab **log in to the Portal as `user1`**
+
+You should be able to log in but you won't see any Job Templates yet. This is because we have to setup RBAC in Self-Service Portal, too!
+
+Go back to the browser where you are logged in as the Portal admin, then:
+
+* From the side menu select **Administration -> RBAC**
+* Click **Create** to create a new role.
+* Give the role a name e.g. `team1`, then click **Next**
+* In **Add users and groups** select the `team1` team, then click **Next**
+* In **Add permission policies**, select the Catalog and Scaffolder plugins
+* Expand the **Catalog** and **Scaffolder** plug-ins 
+
+To allow users to view templates and execute jobs in Ansible Automation Platform, grant the following minimum permissions for the selected plug-ins by selecting the check box to the left of the permission names.
+
+Catalog permissions:
+
+* `catalog.entity.read`
+
+Scaffolder permissions:
+
+* `scaffolder.template.parameter.read`
+* `scaffolder.template.step.read`
+* `scaffolder.action.execute`
+* `scaffolder.task.cancel`
+* `scaffolder.task.create`
+* `scaffolder.task.read`
+
+* Click **Next**, review and click **Create**
+
+NOTE:
+====
+The scaffolder.task.read permission must be enabled so that users can view previous task runs in the History page in the self-service automation portal console.
+====
+
+When finished, your new role is included in the **All roles** list when you select **Administration -> RBAC** in the navigation pane in self-service automation portal.
+
+### Test Self-Service Portal
+
+No you are ready to test the unprivileged user! Back in the browser where you are logged in as user `user1`, refresh the browser window.
+
+You should now see the duplicated Job Template you gave the user execute rights for in AAP and you should be able to launch it. Note the other template the user has no rights for won't show up!
+
+## Expanding the Use Cases
+
+As a first exercise let's see how a Job Template Survey will show up in the Self-Service Portal. Again we won't provide step-by-step instructions but just the outline what you have to do:
+
+* As admin user in AAP, add a Survey to the duplicated Job Template user1 is allowed to execute
+* There is not a lot of sensible things you could add here to the demo Playbook, this is just for learning purposes
+* E.g. add a Survey that provides some multiple-choice options... whatever suits you ;-)
+* Don't forget to enable the Survey
+
+Now in the Self-Service Portal as user admin resync the Job Templates again.
+
+NOTE:
+====
+The Self-Service Portal syncs users and other entities on a regular, configurable schedule. To speed things up we do this manually here
+====
+
+If you now run the Job Template in Self-Service Portal as user `user1` you will first get the Survey like you would expect in AAP, too.
+
+
+
 
 
 
