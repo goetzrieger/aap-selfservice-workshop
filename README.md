@@ -245,6 +245,8 @@ Now switch to the Self-Service Portal UI as **user admin**.
 
 You should be able to log in but you won't see any Job Templates yet. This is because we have to setup RBAC in Self-Service Portal, too!
 
+### Setup RBAC Rules in Self-Service Portal
+
 Go back to the browser where you are logged in as the Portal admin, then:
 
 * From the side menu select **Administration -> RBAC**
